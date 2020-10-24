@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <h4>Dashboard working in progress</h4>
+    <div class="container">
+        <h4 class="mt-2">Dashboard work in progress</h4>
     </div>
 </template>
 

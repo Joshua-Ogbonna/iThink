@@ -5,22 +5,48 @@
             
             <div class="form-group">
                 <label for="Email">Email</label>
-                <input type="email" name="email" class="form-control" placeholder="johndoe@email.com">
+                <input type="email" name="email" class="form-control" placeholder="johndoe@email.com" v-model="info.email">
             </div>
             <div class="form-group">
                 <label for="Password">Password</label>
-                <input type="password" name="password" class="form-control" placeholder="**************">
+                <input type="password" name="password" class="form-control" placeholder="**************" v-model="info.password">
             </div>
             
-            <button class="btn mr-5">Login</button>
+            <button class="btn mr-5" @click.prevent="loginUser">Login</button>
             <router-link to="/register" class="para mr-5">Don't have an account? Register</router-link>
         </form>
     </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+/* eslint-disable */
+import router from '../router/index'
     export default {
-        
+        data() {
+            return {
+                info: {
+                    email: "",
+                    password: ""
+                }
+            }
+        },
+        methods: {
+            ...mapActions(['login']),
+            loginUser() {
+                let user = {
+                    email: this.info.email,
+                    password: this.info.password
+                }
+                this.login(user).then((res) => {
+                    if(res.data.success) {
+                        this.$router.push('/profile')
+                    }
+                }).catch((error) => {
+                    console.log(error)
+                })
+            }
+        },
     }
 </script>
 

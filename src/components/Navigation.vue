@@ -11,16 +11,19 @@
                         <router-link class="nav-link" to="/about">About</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" to="/profile">Profile</router-link>
+                        <router-link class="nav-link" to="/profile" v-if="isLoggedIn">Profile</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" to="/register">Register</router-link>
+                        <router-link class="nav-link" to="/register" v-if="!isLoggedIn">Register</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" to="/login">Login</router-link>
+                        <router-link class="nav-link" to="/login" v-if="!isLoggedIn">Login</router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">Logout</a>
+                        <button class="nav-link" v-if="isLoggedIn">Welcome {{user.name}} </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" @click.prevent="logout" v-if="isLoggedIn">Logout</button>
                     </li>
                 </ul>
             </div>
@@ -29,8 +32,21 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
     export default {
-        
+        computed: {
+            ...mapGetters(['isLoggedIn', 'user']),
+        },
+
+        methods: {
+            ...mapActions(['signout', 'getUser']),
+            logout() {
+                this.signout()
+            }
+        },
+        created () {
+            this.getUser();
+        },
     }
 </script>
 
@@ -59,5 +75,10 @@
     .navbar {
         background-color:  rgb(15, 15, 15);
         color: rgb(12, 12, 12);
+    }
+    button {
+        background-color: rgb(15, 15, 15);
+        outline: none;
+        border: none;
     }
 </style>
