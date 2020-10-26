@@ -5,16 +5,17 @@
             <li class="list-group-item mt-2">Email Address: {{user.email}}</li>
             
         </ul>
+        <Diaries />
     </div>
 </template>
 
 <script>
 /* eslint-disable */
-// import Dashboard from '@/components/dashboard'
+import Diaries from '@/components/diaries'
 import { mapActions, mapGetters } from 'vuex'
     export default {
         components: {
-            // Dashboard,
+            Diaries,
         },
         computed: {
             ...mapGetters(['user'])
