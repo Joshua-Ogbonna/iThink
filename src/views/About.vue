@@ -48,7 +48,7 @@ export default {
   }
   .register {
     margin-right: 2em;
-    background: rgb(212, 163, 27);
+    background: rgb(241, 87, 87);
     color: #000;
     font-size: 1.4em;
     border-radius: 40px;
@@ -58,7 +58,7 @@ export default {
   .login {
     background: #000;
     outline: none;
-    color:  rgb(212, 163, 27);
+    color: rgb(241, 87, 87);
     font-size: 1.4em;
     border-radius: 40px;
     padding: 1em 3em;

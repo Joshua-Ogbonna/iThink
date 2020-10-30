@@ -56,7 +56,7 @@ import { mapGetters, mapActions } from 'vuex'
         
     }
     .navbar-brand {
-        color: rgb(255, 249, 249);
+        color: rgb(241, 87, 87);
         font-family: 'Rubik', sans-serif;
         font-size: 1.5em;
     }
@@ -70,7 +70,7 @@ import { mapGetters, mapActions } from 'vuex'
         font-size: 1.2em;
     }
     .nav-link:hover {
-        color: rgb(212, 163, 27);
+        color: rgb(241, 87, 87);
     }
     .navbar {
         background-color:  rgb(15, 15, 15);

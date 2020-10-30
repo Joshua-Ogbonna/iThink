@@ -60,14 +60,14 @@ import router from '../router/index'
     button {
         background: #000;
         outline: none;
-        color:  rgb(212, 163, 27);
+        color: rgb(241, 87, 87);
         font-size: 0.9em;
         border-radius: 40px;
         padding: 1em 3em;
         margin-top: 1em;
     }
     .btn:hover {
-        color:  rgb(212, 163, 27);
+        color: rgb(241, 87, 87);
     }
     .para {
         color: #000;

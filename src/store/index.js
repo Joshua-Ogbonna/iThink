@@ -11,9 +11,10 @@ export default new Vuex.Store({
     token: localStorage.getItem('token') || "",
     user: {},
     status: '',
-    diaries: [],
-    userDiary: []
+    diaries: []
   },
+
+  // State Getters
   getters: {
     isLoggedIn (state) {
       if (state.token != "") {
@@ -27,9 +28,11 @@ export default new Vuex.Store({
       return state.user
     },
     diaries(state) {
-      return state.diaries
+      return state.diaries.diary
     }
   },
+
+  // State Mutations
   mutations: {
     login_request(state) {
       state.status = 'loading'
@@ -62,6 +65,12 @@ export default new Vuex.Store({
     },
     diary_response(state, diary) {
       state.diaries = diary,
+      state.status = 'success'
+    },
+    postDiary_request(state) {
+      state.status = 'loading'
+    },
+    postDiary_response(state) {
       state.status = 'success'
     }
   },
@@ -103,11 +112,23 @@ export default new Vuex.Store({
       return response
     },
 
-    // Get User's Diaries diaries
+    // Get User's Diaries
     async getDiaries({ commit }) {
       commit('diary_request')
-      let response = await axios.get('http://localhost:3200/api/user/', this.state.user._id)
-      commit('diary_response', response.data.diary)
+      let response = await axios.get('http://localhost:3200/api/thoughts')
+      commit('diary_response', response.data)
+      return response
+    },
+
+    // Post diaries
+    async postDiaries( { commit }, payload ) {
+      commit('postDiary_request')
+      let response = await axios.post('http://localhost:3200/api/user/'+ this.state.user._id, payload)
+
+      if(response.data.success !== undefined) {
+        commit('postDiary_response')
+      }
+
       return response
     },
 
