@@ -6,28 +6,30 @@
                 <h3 class="">Diaries</h3>
             </div>
             <div>
-                <button class="btn ml-5 mb-4" @click="toggleForm()">add thoughts</button>
+                <router-link class="btn ml-5 mb-4" id="button" to="/add-thought">add thoughts</router-link>
             </div>
         </div>
 
         <div class="row mt-5" v-if="getUserDiary.thoughts.length > 0">
             <div class="col-sm-12 col-md-6 col-lg-4" v-for="diary in getUserDiary.thoughts" :key="diary._id">
+                
                 <div class="card mb-4" style="width: 23rem;">
                     <div class="card-body">
-                        <h5 class="card-title"> {{diary.title}} </h5>
+                        <router-link :to="'diary/'+ diary._id"><h5 class="card-title" id="title"> {{diary.title}} </h5></router-link>
                         <h6 class="card-subtitle mb-2 text-muted">{{user.name}}</h6>
-                        <p class="card-text">{{diary.thoughts}}</p>
+                        <p class="card-text">{{diary.thoughts.slice(0, 50)}}</p>
                         <a class="card-subtitle mb-2 text-muted">{{diary.createdAt}}</a>
-                        
+                            
                     </div>
                 </div>
+                
             </div>
         </div>
 
         <div v-else>
             <h4>Hello {{user.name}}, you have posted no thoughts yet! Start posting right away </h4>
         </div>
-        <i class="fas fa-plus" id="fas" @click="toggleForm()"></i>
+        <router-link to="/add-thought"><i class="fas fa-plus" id="fas"></i></router-link>
     </div>
 </template>
 
@@ -97,7 +99,7 @@ import axios from 'axios'
     #fas:hover {
         color: rgb(241, 87, 87);
     }
-    button {
+    #button {
     margin-right: 2em;
     background:#000;
     color: rgb(241, 87, 87);
@@ -105,7 +107,7 @@ import axios from 'axios'
     
    
   }
-  button:hover {
+  #button:hover {
     background:#000;
     color: rgb(241, 87, 87);
   }
@@ -114,9 +116,16 @@ import axios from 'axios'
       background: white;
       border-radius: 10px;
       box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-        transition: 0.3s;
+    transition: 0.3s;
+    
   }
   .card h3 {
       font-family: 'Kanit', sans-serif;
+      text-decoration: none;
+  }
+
+  #title {
+      color: black;
+      text-decoration: none;
   }
 </style>

@@ -40,9 +40,8 @@ import { mapActions } from 'vuex'
                 }
                 this.postDiaries(user).then((res) => {
                     if(res.data.success) {
-                        this.toggleForm()
                         console.log('successfully posted')
-                        this.$router.push('/profile')
+                        this.$router.push('profile')
                     }
                 }).catch((error) => {
                     console.log(error)

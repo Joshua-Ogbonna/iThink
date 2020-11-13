@@ -43,7 +43,7 @@ const routes = [
   },
   {
     path: '/profile',
-    name: 'Profile',
+    name: 'profile',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -59,6 +59,17 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "Add Diary" */ '../components/diaryForm.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/diary/:id',
+    name: 'singleThought',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "Single Thought" */ '../components/singleDiary.vue'),
     meta: {
       requiresAuth: true
     }
