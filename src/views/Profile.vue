@@ -10,20 +10,15 @@
             </div>
         </div>
 
-        <diaryForm v-if="showForm"/>
-
-        <div v-if="reverseDiaries.length > 0">
-            <div class="row">
-                <div class="col-sm-12 col-md-6 col-lg-4" v-for="diary of reverseDiaries" :key="diary._id">
-                    <div>
-                        <div class="card mb-2" >
-                            <div class="card-body">
-                                <h3 class="card-title"> {{diary.title}} </h3>
-                                <h6 class="card-subtitle mb-2 text-muted"> {{user.name}} </h6>
-                                <p class="card-text"> {{diary.thoughts}} </p>
-                                <a class="card-subtitle"> {{diary.createdAt}} </a>
-                            </div>
-                        </div>
+        <div class="row mt-5" v-if="getUserDiary.thoughts.length > 0">
+            <div class="col-sm-12 col-md-6 col-lg-4" v-for="diary in getUserDiary.thoughts" :key="diary._id">
+                <div class="card mb-4" style="width: 23rem;">
+                    <div class="card-body">
+                        <h5 class="card-title"> {{diary.title}} </h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{user.name}}</h6>
+                        <p class="card-text">{{diary.thoughts}}</p>
+                        <a class="card-subtitle mb-2 text-muted">{{diary.createdAt}}</a>
+                        
                     </div>
                 </div>
             </div>
@@ -40,37 +35,42 @@
 /* eslint-disable */
 import diaryForm from '@/components/diaryForm'
 import { mapActions, mapGetters } from 'vuex'
+import axios from 'axios'
+
     export default {
         // Vue Data
         data() {
             return {
                 showForm: false,
+                diary: []
             }
         },
         components: {
             diaryForm
         },
         computed: {
-            ...mapGetters(['user', 'diaries']),
+            ...mapGetters(['user']),
             getUserDiary() {
-                return this.diaries.find(diary => {
-                    return diary._id == this.user._id
+                return this.diary.find(diary => {
+                    return diary._id === this.user._id
                 })
             },
-            reverseDiaries() {
-                return this.getUserDiary.thoughts.slice().reverse()
-            }
+            
         },
         methods: {
-            ...mapActions(['getUser', 'getDiaries']),
+            ...mapActions(['getUser']),
             toggleForm() {
                 this.showForm = !this.showForm
             },
         },
         created () {
-            this.getUser();
-            this.getDiaries()
-            this.getUserDiary()
+            this.getUser()
+            
+            axios.get('http://localhost:3200/api/thoughts').then((response) => {
+                this.diary = response.data.diary
+                // console.log(this.diary)
+            })
+            
         },
     }
 </script>

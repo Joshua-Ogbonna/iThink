@@ -25,7 +25,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Register.vue'),
+    component: () => import(/* webpackChunkName: "Register" */ '../views/Register.vue'),
     meta: {
       requiresGuest: true
     }
@@ -36,7 +36,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue'),
+    component: () => import(/* webpackChunkName: "Login" */ '../views/Login.vue'),
     meta: {
       requiresGuest: true
     }
@@ -47,7 +47,18 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Profile.vue'),
+    component: () => import(/* webpackChunkName: "Profile" */ '../views/Profile.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/add-thought',
+    name: 'diaryForm',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "Add Diary" */ '../components/diaryForm.vue'),
     meta: {
       requiresAuth: true
     }

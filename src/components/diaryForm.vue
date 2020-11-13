@@ -42,6 +42,7 @@ import { mapActions } from 'vuex'
                     if(res.data.success) {
                         this.toggleForm()
                         console.log('successfully posted')
+                        this.$router.push('/profile')
                     }
                 }).catch((error) => {
                     console.log(error)
