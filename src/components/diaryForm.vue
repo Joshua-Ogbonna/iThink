@@ -1,5 +1,5 @@
 <template>
-    <div class="container mb-4">
+    <div class="container mb-4 mt-5 ">
         
         <div>
             <form>
@@ -18,6 +18,7 @@
 
 <script>
 // import Editor from '@tinymce/tinymce-vue'
+import Swal from 'sweetalert2'
 import { mapActions } from 'vuex'
     export default {
         components: {
@@ -40,9 +41,15 @@ import { mapActions } from 'vuex'
                 }
                 this.postDiaries(user).then((res) => {
                     if(res.data.success) {
-                        console.log('successfully posted')
-                        this.$router.push('profile')
+                        Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Your work has been saved',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        })
                     }
+                    this.$router.push('profile')
                 }).catch((error) => {
                     console.log(error)
                 })

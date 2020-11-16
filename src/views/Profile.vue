@@ -18,17 +18,53 @@
                         <router-link :to="'diary/'+ diary._id"><h5 class="card-title" id="title"> {{diary.title}} </h5></router-link>
                         <h6 class="card-subtitle mb-2 text-muted">{{user.name}}</h6>
                         <p class="card-text">{{diary.thoughts.slice(0, 50)}}</p>
-                        <a class="card-subtitle mb-2 text-muted">{{diary.createdAt}}</a>
-                            
+                        <a class="card-subtitle mb-2 text-muted">{{diary.createdAt}}</a> <br>
+                        <button class="btn" id="edit" data-toggle="modal" @click="diaryEdit(diary)" data-target="#exampleModal">Edit</button>
+                        <button class="btn ml-4" id="delete" @click="deleteDiary(diary)">Delete</button>
+                        
                     </div>
-                </div>
                 
+                
+                </div>
             </div>
         </div>
+
 
         <div v-else>
             <h4>Hello {{user.name}}, you have posted no thoughts yet! Start posting right away </h4>
         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Diary</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input type="text" name="title" class="form-control" v-model="editDiary.title">
+                            </div>
+                            <div class="form-group">
+                                <label for="thoughts">Thoughts</label>
+                                <textarea name="thoughts" cols="30" rows="10" class="form-control" v-model="editDiary.thoughts"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" @click="updateDiary()">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                        <!-- End of modal -->
         <router-link to="/add-thought"><i class="fas fa-plus" id="fas"></i></router-link>
     </div>
 </template>
@@ -38,13 +74,19 @@
 import diaryForm from '@/components/diaryForm'
 import { mapActions, mapGetters } from 'vuex'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
     export default {
         // Vue Data
         data() {
             return {
                 showForm: false,
-                diary: []
+                diary: [],
+                editDiary: {
+                    title: "",
+                    thoughts: ""
+                },
+                activeDiary: null
             }
         },
         components: {
@@ -64,15 +106,78 @@ import axios from 'axios'
             toggleForm() {
                 this.showForm = !this.showForm
             },
+
+            // Get diaries
+            getDiary() {
+                axios.get('http://localhost:3200/api/thoughts').then((response) => {
+                    this.diary = response.data.diary
+                    // console.log(this.diary)
+                })
+            },
+
+            // Delete Diary
+            deleteDiary(diary) {
+                Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        axios.delete('http://localhost:3200/api/thoughts/' + diary._id).then(() => { 
+                            Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                            )
+                        this.getDiary()
+                        })
+                    }
+                })
+                
+                // console.log(diary._id)
+            },
+
+            // Edit diary
+            diaryEdit(diary) {
+                this.editDiary.title = diary.title
+                this.editDiary.thoughts = diary.thoughts
+                // console.log(diary._id)
+                this.activeDiary = diary._id
+            },
+
+            // Update diary
+            updateDiary() {
+                Swal.fire({
+                        title: 'Do you want to save the changes?',
+                        showDenyButton: true,
+                        showCancelButton: true,
+                        confirmButtonText: `Save`,
+                        denyButtonText: `Don't save`,
+                    }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+                            Swal.fire('Saved!', '', 'success')
+                             axios.put(`http://localhost:3200/api/thoughts/${this.activeDiary}`, this.editDiary).then(() => {
+                                console.log('Diary updated successfully')
+                                this.getDiary()
+                            })
+                        } else if (result.isDenied) {
+                            Swal.fire('Changes are not saved', '', 'info')
+                        }
+                }).catch(error => {
+                    console.log(error)
+                })
+            }
         },
+
+        // Vue created
         created () {
             this.getUser()
-            
-            axios.get('http://localhost:3200/api/thoughts').then((response) => {
-                this.diary = response.data.diary
-                // console.log(this.diary)
-            })
-            
+            this.getDiary()
         },
     }
 </script>
@@ -127,5 +232,15 @@ import axios from 'axios'
   #title {
       color: black;
       text-decoration: none;
+  }
+
+  #edit {
+      background:#000;
+      color: white;
+  }
+
+  #delete {
+      background: rgb(241, 87, 87);
+      color: black;
   }
 </style>
