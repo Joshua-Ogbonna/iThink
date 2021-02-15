@@ -28,11 +28,11 @@ export default {
 </script>
 
 <style lang="css" scoped>
-  /* .main {
+  .main {
     background-color:  rgb(15, 15, 15);
     height: 91.3vh;
     width: 100%;
-  } */
+  }
   .first_row {
     margin: 10em 0;
     line-height: 2.7em;
