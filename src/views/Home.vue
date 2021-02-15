@@ -4,7 +4,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-7 first_row">
-            <p class="tagline">scared of losing your secrets?</p>
+            <p class="tagline">scared of losing your thoughts?</p>
             <span class="head">Put them in one Place</span>
             <p class="paragraph">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nisi reiciendis distinctio quae tenetur molestias fugit delectus eos voluptates illo culpa.</p>
             <router-link to="/register" class="btn register">Register</router-link>
