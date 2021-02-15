@@ -1,7 +1,7 @@
 <template>
     <div>
-        <nav class="navbar navbar-expand-lg">
-            <router-link class="navbar-brand" to="/">secret.It</router-link>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <router-link class="navbar-brand" to="/">notes</router-link>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -53,7 +53,6 @@ import { mapGetters, mapActions } from 'vuex'
 <style scoped>
     .navbar-brand {
         padding-left: 7.7em;
-        
     }
     .navbar-brand {
         color: rgb(241, 87, 87);
@@ -80,5 +79,19 @@ import { mapGetters, mapActions } from 'vuex'
         background-color: rgb(15, 15, 15);
         outline: none;
         border: none;
+    }
+
+    /* Media query for mobiles */
+    @media only screen and (max-width: 736px) {
+        .navbar-brand {
+            padding-left: 0;
+        }
+    }
+
+    /* Media query for iPad */
+    @media only screen and (min-width: 768px) {
+        .navbar-brand {
+            padding-left: 2rem;
+        }
     }
 </style>

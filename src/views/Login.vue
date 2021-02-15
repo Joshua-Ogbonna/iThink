@@ -5,11 +5,11 @@
             
             <div class="form-group">
                 <label for="Email">Email</label>
-                <input type="email" name="email" class="form-control" placeholder="johndoe@email.com" v-model="info.email">
+                <input type="email" name="email" class="form-control" placeholder="johndoe@email.com" v-model="info.email" required>
             </div>
             <div class="form-group">
                 <label for="Password">Password</label>
-                <input type="password" name="password" class="form-control" placeholder="**************" v-model="info.password">
+                <input type="password" name="password" class="form-control" placeholder="**************" v-model="info.password" required>
             </div>
             
             <button class="btn mr-5" @click.prevent="loginUser">Login</button>
@@ -72,5 +72,27 @@ import router from '../router/index'
     .para {
         color: #000;
         text-decoration: none;
+    }
+
+    @media screen and (max-width: 667px) {
+        form {
+            width: 100%;
+        }
+        h4 {
+            font-size: 0.8rem;
+        }
+        .para {
+            font-size: .7rem;
+            margin-left: -2rem;
+        }
+        button {
+            background: #000;
+            outline: none;
+            color: rgb(241, 87, 87);
+            font-size: 0.9em;
+            border-radius: 40px;
+            padding: 1em 2em;
+            margin-top: 1em;
+        }
     }
 </style>
