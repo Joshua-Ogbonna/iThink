@@ -10,10 +10,10 @@
             </div>
         </div>
 
-        <div class="row mt-5" v-if="getUserDiary.thoughts.length > 0">
-            <div class="col-sm-12 col-md-6 col-lg-4" v-for="diary in getUserDiary.thoughts" :key="diary._id">
+        <div class="row mt-5">
+            <div class="col-sm-12 col-md-6 col-lg-4">
                 
-                <div class="card mb-4" style="width: 23rem;">
+                <!-- <div class="card mb-4" style="width: 23rem;">
                     <div class="card-body">
                         <router-link :to="'diary/'+ diary._id"><h5 class="card-title" id="title"> {{diary.title}} </h5></router-link>
                         <h6 class="card-subtitle mb-2 text-muted">{{user.name}}</h6>
@@ -25,12 +25,12 @@
                     </div>
                 
                 
-                </div>
+                </div> -->
             </div>
         </div>
 
 
-        <div v-else>
+        <div>
             <h4>Hello {{user.name}}, you have posted no thoughts yet! Start posting right away </h4>
         </div>
 
@@ -72,7 +72,6 @@
 <script>
 /* eslint-disable */
 import diaryForm from '@/components/diaryForm'
-import { mapActions, mapGetters } from 'vuex'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 
@@ -86,98 +85,24 @@ import Swal from 'sweetalert2'
                     title: "",
                     thoughts: ""
                 },
-                activeDiary: null
+                activeDiary: null,
+                user: []
             }
         },
         components: {
             diaryForm
         },
-        computed: {
-            ...mapGetters(['user']),
-            getUserDiary() {
-                return this.diary.find(diary => {
-                    return diary._id === this.user._id
-                })
-            },
-            
-        },
         methods: {
-            ...mapActions(['getUser']),
-            toggleForm() {
-                this.showForm = !this.showForm
-            },
-
-            // Get diaries
-            getDiary() {
-                axios.get('http://localhost:3200/api/thoughts').then((response) => {
-                    this.diary = response.data.diary
-                    // console.log(this.diary)
-                })
-            },
-
-            // Delete Diary
-            deleteDiary(diary) {
-                Swal.fire({
-                        title: 'Are you sure?',
-                        text: "You won't be able to revert this!",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, delete it!'
-                    }).then((result) => {
-                    if (result.isConfirmed) {
-                        axios.delete('http://localhost:3200/api/thoughts/' + diary._id).then(() => { 
-                            Swal.fire(
-                            'Deleted!',
-                            'Your file has been deleted.',
-                            'success'
-                            )
-                        this.getDiary()
-                        })
-                    }
-                })
-                
-                // console.log(diary._id)
-            },
-
-            // Edit diary
-            diaryEdit(diary) {
-                this.editDiary.title = diary.title
-                this.editDiary.thoughts = diary.thoughts
-                // console.log(diary._id)
-                this.activeDiary = diary._id
-            },
-
-            // Update diary
-            updateDiary() {
-                Swal.fire({
-                        title: 'Do you want to save the changes?',
-                        showDenyButton: true,
-                        showCancelButton: true,
-                        confirmButtonText: `Save`,
-                        denyButtonText: `Don't save`,
-                    }).then((result) => {
-                        /* Read more about isConfirmed, isDenied below */
-                        if (result.isConfirmed) {
-                            Swal.fire('Saved!', '', 'success')
-                             axios.put(`http://localhost:3200/api/thoughts/${this.activeDiary}`, this.editDiary).then(() => {
-                                console.log('Diary updated successfully')
-                                this.getDiary()
-                            })
-                        } else if (result.isDenied) {
-                            Swal.fire('Changes are not saved', '', 'info')
-                        }
-                }).catch(error => {
-                    console.log(error)
-                })
-            }
+            // ...mapActions(['getUser']),
         },
-
-        // Vue created
-        created () {
-            this.getUser()
-            this.getDiary()
+       
+        // Vue Mounted
+        mounted () {
+            // this.getUser()
+            axios.get('http://localhost:34000/api/user').then(response => {
+                this.user = response.data.user
+            })
+            // console.log(this.user)
         },
     }
 </script>

@@ -39,7 +39,8 @@ import router from '../router/index'
                     password: this.info.password
                 }
                 this.login(user).then((res) => {
-                    if(res.data.success) {
+                    console.log(res)
+                    if(res.data.message) {
                         this.$router.push('/profile')
                     }
                 }).catch((error) => {

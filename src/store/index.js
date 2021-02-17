@@ -10,8 +10,7 @@ export default new Vuex.Store({
   state: {
     token: localStorage.getItem('token') || "",
     user: {},
-    status: '',
-    diaries: []
+    status: ''
   },
 
   // State Getters
@@ -26,9 +25,6 @@ export default new Vuex.Store({
     },
     user(state) {
       return state.user
-    },
-    diaries(state) {
-      return state.diaries.diary
     }
   },
 
@@ -53,13 +49,13 @@ export default new Vuex.Store({
       state.token = ''
       state.user = {}
     },
-    profile_request(state) {
-      state.status = 'loading'
-    },
-    profile_response(state, user) {
-      state.user = user,
-      state.status = 'success'
-    },
+    // profile_request(state) {
+    //   state.status = 'loading'
+    // },
+    // profile_response(state, user) {
+    //   state.user = user,
+    //   state.status = 'success'
+    // },
     diary_request(state) {
       state.status = 'loading'
     },
@@ -78,11 +74,12 @@ export default new Vuex.Store({
     // Login actions
     async login({ commit }, payload) {
       commit('login_request')
-      let response = await axios.post('http://localhost:3200/api/login', payload)
+      let response = await axios.post('http://localhost:34000/api/login', payload)
 
-      if(response.data.success) {
+      if(response.data.message) {
         const token = response.data.token
         const user = response.data.user
+        
 
         localStorage.setItem('token', token)
 
@@ -97,25 +94,25 @@ export default new Vuex.Store({
     // signup actions
     async signup({ commit }, payload) {
       commit('signup_request')
-      let response = await axios.post('http://localhost:3200/api/signup', payload)
-      if(response.data.success !== undefined) {
+      let response = await axios.post('http://localhost:34000/api/register', payload)
+      if(response.data.message !== undefined) {
         commit('signup_success')
       }
       return response
     },
 
     // User information actions
-    async getUser({commit}) {
-      commit('profile_request')
-      let response = await axios.get('http://localhost:3200/api/user')
-      commit('profile_response', response.data.user)
-      return response
-    },
+    // async getUser({commit}) {
+    //   commit('profile_request')
+    //   let response = await axios.get('http://localhost:34000/api/user')
+    //   commit('profile_response', response.data.user)
+    //   return response
+    // },
 
     // Get User's Diaries
     async getDiaries({ commit }) {
       commit('diary_request')
-      let response = await axios.get('http://localhost:3200/api/thoughts')
+      let response = await axios.get('http://localhost:34000/api/')
       commit('diary_response', response.data)
       return response
     },
@@ -123,7 +120,7 @@ export default new Vuex.Store({
     // Post diaries
     async postDiaries( { commit }, payload ) {
       commit('postDiary_request')
-      let response = await axios.post('http://localhost:3200/api/user/'+ this.state.user._id, payload)
+      let response = await axios.post('http://localhost:34000/api/user/'+ this.state.user._id, payload)
 
       if(response.data.success !== undefined) {
         commit('postDiary_response')

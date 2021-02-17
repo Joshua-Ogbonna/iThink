@@ -39,13 +39,10 @@ import { mapGetters, mapActions } from 'vuex'
         },
 
         methods: {
-            ...mapActions(['signout', 'getUser']),
+            ...mapActions(['signout']),
             logout() {
                 this.signout()
             }
-        },
-        created () {
-            this.getUser();
         },
     }
 </script>
