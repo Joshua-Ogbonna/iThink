@@ -92,9 +92,9 @@ import { mapActions } from 'vuex'
             margin-left: -1rem;
         }
          button {
-            background: #000;
+            
             outline: none;
-            color: rgb(241, 87, 87);
+            
             font-size: 0.9em;
             border-radius: 40px;
             padding: 1em 2em;

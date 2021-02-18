@@ -87,9 +87,9 @@ import router from '../router/index'
             margin-left: -2rem;
         }
         button {
-            background: #000;
+            /* background: #000; */
             outline: none;
-            color: rgb(241, 87, 87);
+            /* color: rgb(241, 87, 87); */
             font-size: 0.9em;
             border-radius: 40px;
             padding: 1em 2em;
