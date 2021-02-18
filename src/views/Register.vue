@@ -34,7 +34,8 @@ import { mapActions } from 'vuex'
                     name: "",
                     password: "",
                     confirm_password: ""
-                }
+                },
+                errors: []
             }
         },
 
@@ -47,8 +48,8 @@ import { mapActions } from 'vuex'
                     if(res.data) {
                         this.$router.push('/login')
                     }
-                }).catch(error => {
-                    console.log(error)
+                }).catch(err => {
+                    console.log(err)
                 })
             }
         },
@@ -63,16 +64,16 @@ import { mapActions } from 'vuex'
         width: 60%;
     }
     button {
-        background: #000;
+        background: #1a508b;
         outline: none;
-        color: rgb(241, 87, 87);
+        color: #fff;
         font-size: 0.9em;
         border-radius: 40px;
         padding: 1em 3em;
         margin-top: 1em;
     }
     .btn:hover {
-        color: rgb(241, 87, 87);
+        color: #fff;
     }
     .para {
         color: #000;

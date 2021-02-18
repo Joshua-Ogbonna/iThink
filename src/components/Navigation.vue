@@ -61,8 +61,6 @@ import { mapGetters, mapActions } from 'vuex'
     }
     .navbar-brand:hover {
         color: #000;
-        font-family: 'Rubik', sans-serif;
-        font-size: 1.5em;
     }
     ul {
         padding-right: 7em;
@@ -71,16 +69,13 @@ import { mapGetters, mapActions } from 'vuex'
         margin-right: 1.7em;
         color: #000;
         font-family: 'Rubik', sans-serif;
-        font-size: 1.2em;
-    }
-    .nav-link:hover {
-        color: rgb(241, 87, 87);
+        font-size: 1.1rem;
     }
     .navbar {
         background-color:  #fff;
     }
     button {
-        background-color: #ffa62b;
+        background-color: #1a508b;
         outline: none;
         border: none;
     }
