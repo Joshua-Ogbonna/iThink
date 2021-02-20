@@ -46,7 +46,7 @@ import { mapActions } from 'vuex'
                 this.signup(this.register).then(res => {
                     console.log(res)
                     if(res.data.message) {
-                        this.$router.push('/login')
+                        this.$router.push('/profile')
                     }
                 }).catch(err => {
                     console.log(err)
