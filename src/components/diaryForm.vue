@@ -40,7 +40,7 @@ import axios from 'axios'
                     content: this.thoughts,
                     title: this.title
                 }
-                axios.post(`http://localhost:34000/api/user/${this.user._id}`, user)
+                axios.post(`https://blooming-hollows-33203.herokuapp.com/api/user/${this.user._id}`, user)
                 .then((res) => {
                     if(res.data.success) {
                         Swal.fire({

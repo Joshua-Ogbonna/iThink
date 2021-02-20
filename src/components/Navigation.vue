@@ -2,14 +2,11 @@
     <div>
         <nav class="navbar navbar-expand-lg navbar-light">
             <router-link class="navbar-brand" to="/"><i class="fas fa-book-reader"></i> Evnote</router-link>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" v-click-outside="hide" @click="toggle" >
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse " id="navbarNav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <router-link class="nav-link" id="link" to="/about">About</router-link>
-                    </li>
                     <li class="nav-item">
                         <router-link class="nav-link" id="link" to="/profile" v-if="isLoggedIn">Profile</router-link>
                     </li>
@@ -31,8 +28,15 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import ClickOutside from 'vue-click-outside'
+
     export default {
         name: 'Navigation',
+        data() {
+            return {
+                opened: false
+            }
+        },
         computed: {
             ...mapGetters(['isLoggedIn']),
         },
@@ -41,9 +45,20 @@ import { mapGetters, mapActions } from 'vuex'
             ...mapActions(['signout']),
             logout() {
                 this.signout()
+            },
+            toggle() {
+                this.opened = true
+            },
+            hide() {
+                this.opened = false
             }
         },
-        
+        mounted() {
+            this.popupItem = this.$el
+        },
+        directives: {
+            ClickOutside
+        }
     }
 </script>
 

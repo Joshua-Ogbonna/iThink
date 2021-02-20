@@ -2,12 +2,22 @@
     <div>
         <Navigation />
         <!-- Profile and Notes -->
+        
         <div class="container first">
             <div class="row">
-                <div class="col-lg-6">
-                    <h1 class="note mb-5">Notes</h1>
 
-                    <div class="card mb-3" v-for="note in reversedNote" :key="note._id">
+                <div class="col-lg-6">
+                    <h1 class="note mb-1">Notes</h1>
+                   
+                </div>
+                <div class="col-lg-6 icon">
+                    <i class="fas fa-search text-muted"></i><input type="text" class="form-control float-right" placeholder="Search Notes" v-model="input" >
+                </div>
+                <div class="col-lg-6">
+                    <div v-if="searchNotes.length == 0">
+                         <p class="mt-3" >Hi {{user.name}}, you have not created any notes! Click on the plus button to add your notes. </p>
+                    </div>
+                    <div class="card mb-3" v-for="note in searchNotes" :key="note._id" v-else>
                         
                         <div class="card-body">
                             <span class="float-right "><i class="fas fa-circle spin"></i></span> <br>
@@ -21,11 +31,12 @@
                     </div>
                 </div>
                 <div class="col-lg-6 second">
+                    
                     <img src="@/svgs/task.svg" alt="" class="img-fluid">
 
                     <div class="second-inner">
                         <h1 class="inner-head">Write down your ideas <i class="far fa-lightbulb"></i></h1>
-                        <span>#ideas </span> <span>#inspirations </span> <span> #motivations</span>
+                        <p class="mt-3 mb-3"><span>#ideas </span> <span>#inspirations </span> <span> #motivations</span></p>
 
                         <p class="text-muted">"Sometimes, on Mondays, when servers at A16 are announcing the specials, you can almost feel the excitement at the table when the waiters say, 'And of course, since it's Monday...we have meatballs." Says Shelly Lingren</p>
                     </div>
@@ -55,6 +66,7 @@ import Swal from 'sweetalert2'
                 notes: [],
                 activeDiary: null,
                 user: [],
+                input: ''
             }
         },
         components: {
@@ -68,21 +80,23 @@ import Swal from 'sweetalert2'
         computed: {
             reversedNote() {
                 return this.notes.reverse()
+            },
+            searchNotes() {
+                return this.reversedNote.filter(note => {
+                    return note.title.toLowerCase().includes(this.input.toLowerCase())
+                })
             }
         },
 
         created() {
-            axios.get('http://localhost:34000/api/user').then(response => {
-                axios.get(`http://localhost:34000/api/user/${response.data.user._id}`).then(response => {
+            axios.get('https://blooming-hollows-33203.herokuapp.com/api/user').then(response => {
+                axios.get(`https://blooming-hollows-33203.herokuapp.com/api/user/${response.data.user._id}`).then(response => {
                     this.notes = response.data.notes
                 })
                 this.user = response.data.user
             })
         },
         // Vue Mounted
-        mounted () {
-
-        }
     }
 </script>
 
@@ -100,7 +114,7 @@ import Swal from 'sweetalert2'
         border-radius: 40px;
         position: fixed;
         right: 20px;
-        bottom: 20px;
+        bottom: 4px;
         text-decoration: none;
         font-size: 1.2em;
         color:  white;
@@ -146,6 +160,7 @@ import Swal from 'sweetalert2'
     }
     .second {
         padding-top: 5rem;
+        
     }
     .second img {
         margin: 0 auto;
@@ -164,9 +179,28 @@ import Swal from 'sweetalert2'
         margin-right: 2rem;
         font-weight: bold;
     }
-    .second-inner p {
-        margin-top: 1rem;
+    .second-inner p, p {
         font-size: .95rem;
         font-family: 'Poppins', sans-serif;
+    }
+    input {
+        margin-bottom: 2rem;
+        border-radius: 4rem;
+        padding-left: 2rem;
+    }
+    .icon i {
+        font-size: 1.2rem;
+        position: relative;
+        top: 2rem;
+        left: .6rem;
+    }
+
+    @media only screen and (max-width: 736px) {
+        #fas {
+            height: 30px;
+            width: 30px;
+            font-size: 1rem;
+            color:  white;
+        }
     }
 </style>
