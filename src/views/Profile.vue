@@ -14,10 +14,8 @@
                     <i class="fas fa-search text-muted"></i><input type="text" class="form-control float-right" placeholder="Search Notes" v-model="input" >
                 </div>
                 <div class="col-lg-6">
-                    <div v-if="searchNotes.length == 0">
-                         <p class="mt-3" >Hi {{user.name}}, you have not created any notes! Click on the plus button to add your notes. </p>
-                    </div>
-                    <div class="card mb-3" v-for="note in searchNotes" :key="note._id" v-else>
+                    
+                    <div class="card mb-3" v-for="note in searchNotes" :key="note._id">
                         
                         <div class="card-body">
                             <span class="float-right "><i class="fas fa-circle spin"></i></span> <br>
