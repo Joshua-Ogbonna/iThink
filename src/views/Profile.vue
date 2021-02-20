@@ -197,9 +197,9 @@ import Swal from 'sweetalert2'
 
     @media only screen and (max-width: 736px) {
         #fas {
-            height: 30px;
-            width: 30px;
-            font-size: 1rem;
+            height: 40px;
+            width: 40px;
+            font-size: 1.4rem;
             color:  white;
         }
     }
