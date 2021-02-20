@@ -59,7 +59,7 @@ import router from '../router/index'
         width: 60%;
     }
     button {
-        background: #1a508b;
+        background: #ffc75f;
         outline: none;
         color: #fff;
         font-size: 0.9em;

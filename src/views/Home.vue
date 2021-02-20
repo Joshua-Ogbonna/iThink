@@ -62,7 +62,7 @@ export default {
   }
   .register {
     margin-right: 2em;
-    background: #1a508b;
+    background: #ffc75f;
     color: #fff;
     font-size: 1.4em;
     border-radius: 40px;
@@ -70,7 +70,7 @@ export default {
     margin-top: 1em;
   }
   .login {
-    background: #1a508b;
+    background: #ffc75f;
     outline: none;
     color: #fff;
     font-size: 1.4em;
@@ -115,14 +115,14 @@ export default {
     .register {
       margin-right: 2em;
       
-      color: #000;
+      
       font-size: 1.2rem;
       border-radius: 40px;
       padding: 1em 3em;
       margin-top: 1em;
     }
     .login {
-      background: #000;
+    
       outline: none;
       
       font-size: 1.3rem;

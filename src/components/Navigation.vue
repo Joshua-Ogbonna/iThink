@@ -1,6 +1,6 @@
 <template>
     <div>
-        <nav class="navbar navbar-expand-lg navbar-dark">
+        <nav class="navbar navbar-expand-lg navbar-light">
             <router-link class="navbar-brand" to="/"><i class="fas fa-book-reader"></i> Evnote</router-link>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -21,7 +21,7 @@
                     </li>
                     
                     <li class="nav-item">
-                        <button class="nav-link" @click.prevent="logout" v-if="isLoggedIn">Logout</button>
+                        <button class="nav-link" id="logout" @click.prevent="logout" v-if="isLoggedIn">Logout</button>
                     </li>
                 </ul>
             </div>
@@ -49,7 +49,7 @@ import { mapGetters, mapActions } from 'vuex'
 
 <style scoped>
     i {
-        color: #1a508b;
+        color: #ffc75f;
     }
     .navbar-brand {
         padding-left: 12rem;
@@ -57,7 +57,7 @@ import { mapGetters, mapActions } from 'vuex'
     .navbar-brand {
         color: #000;
         font-family: 'Rubik', sans-serif;
-        font-size: 2.5em;
+        font-size: 1.5em;
     }
     .navbar-brand:hover {
         color: #000;
@@ -74,10 +74,13 @@ import { mapGetters, mapActions } from 'vuex'
     .navbar {
         background-color:  #fff;
     }
-    button {
-        background-color: #1a508b;
+    #logout {
+        background-color: #ffc75f;
         outline: none;
         border: none;
+        padding: .6rem 2rem;
+        border-radius: 40px;
+        color: #fff;
     }
 
     /* Media query for mobiles */

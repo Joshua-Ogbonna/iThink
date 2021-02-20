@@ -1,79 +1,47 @@
 <template>
     <div>
-        
-        <div class="container mt-4">
-            
+        <Navigation />
+        <!-- Profile and Notes -->
+        <div class="container first">
             <div class="row">
-                <div>
-                    <h3 class="">Diaries</h3>
-                </div>
-                <div>
-                    <router-link class="btn ml-5 mb-4" id="button" to="/add-thought">add thoughts</router-link>
-                </div>
-            </div>
+                <div class="col-lg-6">
+                    <h1 class="note mb-5">Notes</h1>
 
-            <div class="row mt-5">
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    
-                    <!-- <div class="card mb-4" style="width: 23rem;">
+                    <div class="card mb-3" v-for="note in reversedNote" :key="note._id">
+                        
                         <div class="card-body">
-                            <router-link :to="'diary/'+ diary._id"><h5 class="card-title" id="title"> {{diary.title}} </h5></router-link>
-                            <h6 class="card-subtitle mb-2 text-muted">{{user.name}}</h6>
-                            <p class="card-text">{{diary.thoughts.slice(0, 50)}}</p>
-                            <a class="card-subtitle mb-2 text-muted">{{diary.createdAt}}</a> <br>
-                            <button class="btn" id="edit" data-toggle="modal" @click="diaryEdit(diary)" data-target="#exampleModal">Edit</button>
-                            <button class="btn ml-4" id="delete" @click="deleteDiary(diary)">Delete</button>
+                            <span class="float-right "><i class="fas fa-circle spin"></i></span> <br>
+                            <h5 class="card-title">{{note.title}}</h5>
                             
-                        </div>
-                    
-                    
-                    </div> -->
-                </div>
-            </div>
-
-
-            <div>
-                <h4>Hello {{user.name}}, you have posted no thoughts yet! Start posting right away </h4>
-            </div>
-
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Edit Diary</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="form-group">
-                                    <label for="title">Title</label>
-                                    <input type="text" name="title" class="form-control" v-model="editDiary.title">
-                                </div>
-                                <div class="form-group">
-                                    <label for="thoughts">Thoughts</label>
-                                    <textarea name="thoughts" cols="30" rows="10" class="form-control" v-model="editDiary.thoughts"></textarea>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" @click="updateDiary()">Save changes</button>
+                            <p class="card-subtitle mt-3 mb-3 text-muted"> {{note.content}} </p>
+                            
+                            <!-- <span href="#" class="card-link text-muted card-subtitle link1">Card link</span> -->
+                            <span href="#" class="card-link float-right link2"> {{new Date(note.createdAt).toLocaleString()}} </span>
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="col-lg-6 second">
+                    <img src="@/svgs/task.svg" alt="" class="img-fluid">
 
-                            <!-- End of modal -->
-            <router-link to="/add-thought"><i class="fas fa-plus" id="fas"></i></router-link>
+                    <div class="second-inner">
+                        <h1 class="inner-head">Write down your ideas <i class="far fa-lightbulb"></i></h1>
+                        <span>#ideas </span> <span>#inspirations </span> <span> #motivations</span>
+
+                        <p class="text-muted">"Sometimes, on Mondays, when servers at A16 are announcing the specials, you can almost feel the excitement at the table when the waiters say, 'And of course, since it's Monday...we have meatballs." Says Shelly Lingren</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>            <!-- End of modal -->
+            <router-link to="/add-thought" :user="user"><i class="fas fa-plus" id="fas"></i></router-link>
         </div>
     </div>
 </template>
 
 <script>
 /* eslint-disable */
+import Navigation from '@/components/Navigation'
 import diaryForm from '@/components/diaryForm'
 import axios from 'axios'
 import Swal from 'sweetalert2'
@@ -84,30 +52,37 @@ import Swal from 'sweetalert2'
         data() {
             return {
                 showForm: false,
-                diary: [],
-                editDiary: {
-                    title: "",
-                    thoughts: ""
-                },
+                notes: [],
                 activeDiary: null,
-                user: []
+                user: [],
             }
         },
         components: {
-            diaryForm
+            diaryForm,
+            Navigation
         },
         methods: {
             // ...mapActions(['getUser']),
         },
-       
-        // Vue Mounted
-        mounted () {
-            // this.getUser()
+
+        computed: {
+            reversedNote() {
+                return this.notes.reverse()
+            }
+        },
+
+        created() {
             axios.get('http://localhost:34000/api/user').then(response => {
+                axios.get(`http://localhost:34000/api/user/${response.data.user._id}`).then(response => {
+                    this.notes = response.data.notes
+                })
                 this.user = response.data.user
             })
-            // console.log(this.user)
         },
+        // Vue Mounted
+        mounted () {
+
+        }
     }
 </script>
 
@@ -131,45 +106,67 @@ import Swal from 'sweetalert2'
         color:  white;
     }
     #fas:hover {
-        color: rgb(241, 87, 87);
+        color: #ffc75f;
     }
-    #button {
-    margin-right: 2em;
-    background:#000;
-    color: rgb(241, 87, 87);
-    font-size: 1.4em;
-    
-   
-  }
-  #button:hover {
-    background:#000;
-    color: rgb(241, 87, 87);
-  }
-  .card {
-      border: none;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    
-  }
-  .card h3 {
-      font-family: 'Kanit', sans-serif;
-      text-decoration: none;
-  }
-
-  #title {
-      color: black;
-      text-decoration: none;
-  }
-
-  #edit {
-      background:#000;
-      color: white;
-  }
-
-  #delete {
-      background: rgb(241, 87, 87);
-      color: black;
-  }
+    .note,
+    .inner-head {
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 700;
+        /* text-align: center; */
+        font-size: 2rem;
+    }
+    .first {
+        margin-top: 3rem;
+    }
+    .card {
+        background: #fafafa;
+        border: none;
+        /* margin-bottom: 1rem; */
+        border-radius: 1rem;
+    }
+    .card-title {
+        font-family: 'Open Sans', sans-serif;
+        font-weight: bold;
+        font-size: 1rem;
+    }
+    .card-subtitle, .link1, .link2 {
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.9rem;
+    }
+    .link2 {
+        color: #ffc75f;
+        font-weight: bold;
+    }
+    .spin {
+        color: #fff;
+        background: #ffc75f;
+        border-radius: 50%;
+        font-size: .6rem;
+        padding: 5px;
+    }
+    .second {
+        padding-top: 5rem;
+    }
+    .second img {
+        margin: 0 auto;
+        width: 60%;
+        display: block;
+    }
+    .second-inner {
+        margin-top:4rem;
+    }
+    .inner-head i {
+        color: #ffc75f;
+    }
+    .second-inner span {
+        color: #ffc75f;
+        font-family: 'Poppins', sans-serif;
+        margin-right: 2rem;
+        font-weight: bold;
+    }
+    .second-inner p {
+        margin-top: 1rem;
+        font-size: .95rem;
+        font-family: 'Poppins', sans-serif;
+    }
 </style>
