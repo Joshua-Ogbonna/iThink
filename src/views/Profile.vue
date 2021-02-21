@@ -2,7 +2,7 @@
     <div>
         <Navigation />
         <!-- Profile and Notes -->
-        
+        <!-- {{searchNotes}} -->
         <div class="container first">
             <div class="row">
 
@@ -15,7 +15,7 @@
                 </div>
                 <div class="col-lg-6">
                     
-                    <div class="card mb-3" v-for="note in searchNotes" :key="note._id">
+                    <div class="card mb-3" v-for="note in reversedNote" :key="note._id">
                         
                         <div class="card-body">
                             <span class="float-right "><i class="fas fa-circle spin"></i></span> <br>
